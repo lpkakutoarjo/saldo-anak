@@ -1,0 +1,297 @@
+:root {
+    --primary-blue: #0A4275;
+    --secondary-blue: #166BB5;
+    --accent-blue: #E1F0FF;
+    --success: #28a745;
+    --text-dark: #2c3e50;
+    --text-light: #6c757d;
+    --white: #ffffff;
+    --bg-color: #f0f4f8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    background-image: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--text-dark);
+}
+
+.background-shape {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Kotak Utama */
+.container {
+    background: var(--white);
+    max-width: 480px;
+    width: 100%;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo-container {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px auto;
+    color: var(--primary-blue);
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(10, 66, 117, 0.1);
+}
+
+h1 {
+    color: var(--primary-blue);
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+#status-bar {
+    display: inline-flex;
+    align-items: center;
+    background: #e6f9ed;
+    color: #1e7e34;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.dot {
+    height: 8px; width: 8px;
+    background-color: var(--success);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 1.5s infinite;
+}
+
+#clock {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Pencarian */
+.search-box {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--primary-blue);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    border: 2px solid #e1e5eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--secondary-blue);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(22, 107, 181, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+#btnSearch {
+    background: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(10, 66, 117, 0.2);
+}
+
+#btnSearch:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+#btnRefresh {
+    background: #f1f3f5;
+    color: var(--text-dark);
+}
+
+#btnRefresh:hover {
+    background: #e2e6ea;
+    transform: translateY(-2px);
+}
+
+button:active { transform: translateY(0); }
+
+/* Hasil & Card */
+.card {
+    background: var(--white);
+    border-radius: 15px;
+    margin-top: 15px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--accent-blue);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-blue);
+}
+
+.card-header h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #edf2f7;
+}
+
+.info-row:last-child { border-bottom: none; }
+
+.info-label { color: var(--text-light); font-size: 0.9rem; }
+.info-value { color: var(--text-dark); font-size: 0.9rem; text-align: right; }
+.font-bold { font-weight: 600; }
+.text-center { text-align: center; }
+
+.card-balance {
+    border: 2px solid var(--accent-blue);
+}
+
+.card-balance .card-header {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.balance-amount {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--secondary-blue);
+    margin: 10px 0;
+}
+
+.balance-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* Utilities & Animations */
+.hidden { display: none !important; }
+
+#loading {
+    text-align: center;
+    margin: 30px 0;
+    color: var(--primary-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid var(--accent-blue);
+    border-top: 4px solid var(--primary-blue);
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    animation: spin 1s linear infinite;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    line-height: 1.5;
+    border-top: 1px solid #edf2f7;
+    padding-top: 15px;
+}
+
+@keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.fade-in { animation: fadeIn 0.8s ease; }
+.slide-up { animation: slideUp 0.5s ease forwards; opacity: 0; }
