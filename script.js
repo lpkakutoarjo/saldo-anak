@@ -12,24 +12,23 @@ setInterval(updateClock, 1000);
 updateClock();
 
 function searchData() {
-    const regNo = document.getElementById('regNo').value;
+    // Mengambil value berdasarkan ID baru
+    const searchName = document.getElementById('searchName').value;
     const resultArea = document.getElementById('resultArea');
     const loading = document.getElementById('loading');
 
-    if (!regNo) {
-        alert("Harap masukkan Nomor Registrasi Anak!");
+    if (!searchName) {
+        alert("Harap masukkan Nama Anak!");
         return;
     }
 
-    // Tampilkan loading, sembunyikan hasil sebelumnya
     loading.classList.remove('hidden');
     resultArea.classList.add('hidden');
 
-    // Link Web App Google Script Anda
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbyF7jrXtHaH5rqJANvVmRt9RtXKAi2nbT86u-tCeieTaNbqMvPNP-Uz_cDjFy-YH2-U0w/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxnW2KZhOO7VUezIvRoP_9RVZamvI4RTn1H5aPbXM5y9XOeHruIqE3GKCV0OqxvjMMPVQ/exec";
 
-    // Fetch API dengan parameter redirect follow
-    fetch(`${scriptUrl}?regNo=${encodeURIComponent(regNo)}`, {
+    // Parameter diubah menjadi ?nama=...
+    fetch(`${scriptUrl}?nama=${encodeURIComponent(searchName)}`, {
         method: 'GET',
         mode: 'cors',
         redirect: 'follow' 
@@ -38,10 +37,8 @@ function searchData() {
     .then(data => {
         loading.classList.add('hidden');
         if (data.status === "success") {
-            document.getElementById('resReg').innerText = data.noReg;
             document.getElementById('resNama').innerText = data.nama;
             
-            // Format angka menjadi Rupiah (Rp)
             const formattedSaldo = new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
@@ -49,18 +46,16 @@ function searchData() {
             }).format(data.saldo);
             
             document.getElementById('resSaldo').innerText = formattedSaldo;
-            
-            // Tampilkan hasil dengan animasi
             resultArea.classList.remove('hidden');
         } else if (data.status === "not_found") {
-            alert("Data Anak tidak ditemukan. Silakan cek kembali Nomor Registrasi.");
+            alert("Data Nama tersebut tidak ditemukan. Pastikan ejaan benar.");
         } else {
-            alert("Error dari server: " + data.message);
+            alert("Error: " + data.message);
         }
     })
     .catch(error => {
         loading.classList.add('hidden');
-        alert("Gagal terhubung ke database. Pastikan koneksi internet aktif atau buka menggunakan Live Server.");
+        alert("Gagal terhubung ke database.");
         console.error("Detail Error:", error);
     });
 }
@@ -73,7 +68,7 @@ function refreshPage() {
 }
 
 // Fitur tambahan: Tekan "Enter" pada keyboard untuk mencari
-document.getElementById('regNo').addEventListener("keypress", function(event) {
+document.getElementById('searchName').addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         searchData();
