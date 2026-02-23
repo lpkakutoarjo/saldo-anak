@@ -24,21 +24,21 @@
         </header>
 
         <main>
-            <div class="search-box">
-                <label for="regNo" class="input-label">Nomor Registrasi Anak</label>
-                <div class="input-group">
-                    <span class="input-icon"><i class="fa-solid fa-id-card"></i></span>
-                    <input type="text" id="regNo" placeholder="Contoh: BI.12345" autocomplete="off">
-                </div>
-                <div class="button-group">
-                    <button onclick="searchData()" id="btnSearch">
-                        <i class="fa-solid fa-magnifying-glass"></i> Cari Data
-                    </button>
-                    <button onclick="refreshPage()" id="btnRefresh">
-                        <i class="fa-solid fa-arrows-rotate"></i> Refresh
-                    </button>
-                </div>
-            </div>
+<div class="search-box">
+    <label for="searchName" class="input-label">Nama Lengkap Anak</label>
+    <div class="input-group">
+        <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+        <input type="text" id="searchName" placeholder="Masukkan Nama Lengkap..." autocomplete="off">
+    </div>
+    <div class="button-group">
+        <button onclick="searchData()" id="btnSearch">
+            <i class="fa-solid fa-magnifying-glass"></i> Cari Data
+        </button>
+        <button onclick="refreshPage()" id="btnRefresh">
+            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+        </button>
+    </div>
+</div>
 
             <div id="loading" class="hidden">
                 <div class="spinner"></div>
@@ -52,10 +52,6 @@
                         <h3>Identitas Anak Binaan</h3>
                     </div>
                     <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label">No. Registrasi</span>
-                            <span class="info-value" id="resReg">-</span>
-                        </div>
                         <div class="info-row">
                             <span class="info-label">Nama Lengkap</span>
                             <span class="info-value font-bold" id="resNama">-</span>
