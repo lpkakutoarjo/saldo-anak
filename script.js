@@ -25,7 +25,7 @@ function searchData() {
     loading.classList.remove('hidden');
     resultArea.classList.add('hidden');
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxnW2KZhOO7VUezIvRoP_9RVZamvI4RTn1H5aPbXM5y9XOeHruIqE3GKCV0OqxvjMMPVQ/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbyHLQbqCHF6xchQWGEPuw9H9YeYCDcPvkZSrKUOpL02oGUv9tQ2CxObrTC-0fAIcAu4UQ/exec";
 
     // Parameter diubah menjadi ?nama=...
     fetch(`${scriptUrl}?nama=${encodeURIComponent(searchName)}`, {
@@ -74,3 +74,4 @@ document.getElementById('searchName').addEventListener("keypress", function(even
         searchData();
     }
 });
+
