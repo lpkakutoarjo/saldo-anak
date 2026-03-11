@@ -77,7 +77,13 @@ header {
     color: #27ae60;
     margin-bottom: 8px;
 }
-
+.divider{
+    width: 80px;
+    height: 4px;
+    background: #27ae60;
+    margin: 10px auto;
+    border-radius: 5px;
+}
 .subtitle {
     font-size: 16px;
     color: #7f8c8d;
@@ -444,4 +450,5 @@ footer {
 
 .fade-in { animation: fadeIn 0.8s ease; }
 .slide-up { animation: slideUp 0.5s ease forwards; opacity: 0; }
+
 
