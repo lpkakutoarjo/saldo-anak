@@ -52,17 +52,23 @@ header {
 }
 
 .logo-container {
-    width: 60px;
-    height: 60px;
-    background: var(--accent-blue);
+    width: 90px; 
+    height: 90px;
+    background: transparent;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto 15px auto;
-    color: var(--primary-blue);
-    font-size: 24px;
-    box-shadow: 0 4px 10px rgba(10, 66, 117, 0.1);
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%; 
+    box-shadow: 0 4px 15px rgba(10, 66, 117, 0.15);
+    background-color: var(--white);
 }
 
 .title {
@@ -444,6 +450,7 @@ footer {
 
 .fade-in { animation: fadeIn 0.8s ease; }
 .slide-up { animation: slideUp 0.5s ease forwards; opacity: 0; }
+
 
 
 
