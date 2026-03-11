@@ -65,16 +65,22 @@ header {
     box-shadow: 0 4px 10px rgba(10, 66, 117, 0.1);
 }
 
-h1 {
-    color: var(--primary-blue);
-    font-size: 1.4rem;
-    font-weight: 700;
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
     margin-bottom: 5px;
 }
 
+.service {
+    font-size: 22px;
+    color: #27ae60;
+    margin-bottom: 8px;
+}
+
 .subtitle {
-    color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 16px;
+    color: #7f8c8d;
 }
 
 #status-bar {
@@ -438,3 +444,4 @@ footer {
 
 .fade-in { animation: fadeIn 0.8s ease; }
 .slide-up { animation: slideUp 0.5s ease forwards; opacity: 0; }
+
