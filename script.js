@@ -1,85 +1,109 @@
-function updateClock() {
-    // Fungsi untuk memperbarui jam setiap detik
-    const now = new Date(); // Mengambil data waktu sekarang
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    // Format tampilan waktu dalam Bahasa Indonesia
-    const clockElement = document.querySelector('#clock span');
-    if (clockElement) {
-        clockElement.innerText = now.toLocaleDateString('id-ID', options);
-        // Memasukkan teks waktu ke elemen HTML
-    }
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="image/logo-cendol.png">
+    <title>Layanan CENDOL - LPKA Kutoarjo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shape"></div>
+    <div class="background-shape shape-2"></div>
 
-setInterval(updateClock, 1000); // Menjalankan updateClock setiap 1000ms (1 detik)
-updateClock(); // Menjalankan fungsi sekali saat halaman dimuat
-
-function searchData() {
-    // Fungsi utama untuk mencari data saldo
-    const searchInput = document.getElementById('searchName').value.trim();
-    // Mengambil nilai input dan menghapus spasi di awal/akhir
-    const resultArea = document.getElementById('resultArea');
-    const loading = document.getElementById('loading');
-
-    if (!searchInput) {
-        alert("Harap masukkan Nama Lengkap atau Nama Panggilan Anak!");
-        // Validasi jika input kosong
-        return;
-    }
-
-    loading.classList.remove('hidden'); // Menampilkan animasi loading
-    resultArea.classList.add('hidden'); // Menyembunyikan hasil sebelumnya
-
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwv4xaZPzJPPPwtFhbGEJ6-j0bdJa1i_OkHcv6EZfJ1FuXt_61n63Ube2oHYW-OKYlGaw/exec";
-    // URL Web App Google Apps Script sebagai backend database
-
-    fetch(`${scriptUrl}?nama=${encodeURIComponent(searchInput)}`, {
-        // Mengirim permintaan ke server dengan parameter nama
-        method: 'GET',
-        mode: 'cors',
-        redirect: 'follow' 
-    })
-    .then(response => response.json()) // Mengubah respon server menjadi format JSON
-    .then(data => {
-        loading.classList.add('hidden'); // Menyembunyikan loading setelah data diterima
-        if (data.status === "success") {
-            // Jika data ditemukan
-            document.getElementById('resNama').innerText = data.nama; // Menampilkan nama dari database
+    <div class="container fade-in">
+        <header class="hero-section">
+            <div class="logo-area">
+                <img src="image/logo-cendol.png" alt="Logo CENDOL" class="main-logo">
+                <h1 class="hero-title">LAYANAN CENDOL</h1>
+                <h2 class="hero-subtitle">"Cek Nominal Saldo" Anak Binaan</h2>
+                <p class="hero-desc">LPKA Kelas I Kutoarjo</p>
+            </div>
             
-            const formattedSaldo = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(data.saldo);
-            // Memformat angka menjadi mata uang Rupiah
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+                    <input type="text" id="searchName" placeholder="Ketik nama lengkap (Wajib)" autocomplete="off">
+                    <button onclick="searchData()" id="btnSearch">Cari Data</button>
+                </div>
+                <div id="status-bar">
+                    <span class="dot"></span> <span class="status-text">Database Terkoneksi Real-Time</span>
+                </div>
+            </div>
+        </header>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Mencari data ke server LPKA Kutoarjo...</p>
+        </div>
+
+        <main id="resultArea" class="hidden">
+            <div class="dashboard-grid">
+                
+                <div class="card card-identity slide-in-left">
+                    <div class="card-tag">Identitas Binaan</div>
+                    <div class="card-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                    <div class="card-content">
+                        <h3>Nama Lengkap</h3>
+                        <p id="resNama" class="highlight-text">-</p>
+                        <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Status Terdaftar</div>
+                    </div>
+                </div>
+
+                <div class="card card-balance slide-in-right">
+                    <div class="card-tag">Informasi Keuangan</div>
+                    <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="card-content">
+                        <h3>Total Saldo Aktif</h3>
+                        <p id="resSaldo" class="balance-text">Rp 0</p>
+                        <span class="update-ts"><i class="fa-solid fa-clock"></i> Tersinkronisasi hari ini</span>
+                    </div>
+                </div>
+
+                <div class="card card-history slide-in-bottom">
+                    <div class="card-header-history">
+                        <div>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <h3 id="history-title">3 Transaksi Terakhir</h3>
+                        </div>
+                        <div class="history-search hidden" id="history-search-container">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchHistory" placeholder="Cari (Bulan, Jenis...)" onkeyup="filterHistory()">
+                        </div>
+                    </div>
+                    
+                    <div id="resHistory" class="history-list">
+                        </div>
+
+                    <div class="text-center mt-3 hidden" id="btn-more-container">
+                        <button class="btn-more-history" onclick="showAllHistory()">Cari Riwayat Terdahulu <i class="fa-solid fa-chevron-down"></i></button>
+                    </div>
+                </div>
+                
+            </div>
             
-            document.getElementById('resSaldo').innerText = formattedSaldo; // Menampilkan saldo terformat
-            resultArea.classList.remove('hidden'); // Menampilkan area hasil
-        } else if (data.status === "not_found") {
-            // Jika data tidak ada di database
-            alert(`Data dengan kata kunci "${searchInput}" tidak ditemukan. Coba gunakan ejaan atau nama panggilan lain.`);
-        } else {
-            alert("Error: " + data.message); // Menampilkan pesan error dari server
-        }
-    })
-    .catch(error => {
-        // Menangani jika gagal terhubung ke server
-        loading.classList.add('hidden');
-        alert("Gagal terhubung ke database. Pastikan koneksi internet stabil.");
-        console.error("Detail Error:", error);
-    });
-}
+            <div class="action-bottom slide-in-bottom">
+                <button onclick="refreshPage()" class="btn-refresh-bottom"><i class="fa-solid fa-arrows-rotate"></i> Cek Data Lainnya</button>
+            </div>
+        </main>
 
-function refreshPage() {
-    // Fungsi untuk memuat ulang halaman secara halus
-    setTimeout(() => {
-        location.reload();
-    }, 200);
-}
+        <footer>
+            <div class="footer-links">
+                <a href="https://lpkakutoarjo.my.id" target="_blank" class="web-link">
+                    <i class="fa-solid fa-globe"></i> Kunjungi Web Resmi: <span>lpkakutoarjo.my.id</span>
+                </a>
+            </div>
+            <div class="main-copyright">
+                <p>&copy; 2026 LPKA Kelas I Kutoarjo<br>Sistem Informasi Terpadu</p>
+            </div>
+            <div class="magang-badge">
+                <i class="fa-solid fa-user-graduate"></i> Copyright 2026 Peserta MagangHUB Kemnaker Batch II
+            </div>
+        </footer>
+    </div>
 
-document.getElementById('searchName').addEventListener("keypress", function(event) {
-    // Menjalankan pencarian otomatis saat tombol "Enter" ditekan
-    if (event.key === "Enter") {
-        event.preventDefault();
-        searchData();
-    }
-});
+    <script src="script.js"></script>
+</body>
+</html>
