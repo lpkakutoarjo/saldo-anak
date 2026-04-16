@@ -4,73 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="image/logo-cendol.png">
-    <title>CENDOL (Cek Nominal Saldo) - LPKA Kutoarjo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Layanan CENDOL - LPKA Kutoarjo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="background-shape"></div>
+    <div class="background-shape shape-2"></div>
+
     <div class="container fade-in">
-        <header>
-            <div class="logo-container">
-                <img src="image/logo-cendol.png" alt="Logo CENDOL" class="logo-img">
+        <header class="hero-section">
+            <div class="logo-area">
+                <img src="image/logo-cendol.png" alt="Logo CENDOL" class="main-logo">
+                <h1 class="hero-title">LAYANAN CENDOL</h1>
+                <h2 class="hero-subtitle">"Cek Nominal Saldo" Anak Binaan</h2>
+                <p class="hero-desc">LPKA Kelas I Kutoarjo</p>
             </div>
-            <h1 class="title">Layanan CENDOL</h1>
-            <h3 class="service">"Cek Nominal Saldo"</h3>
-            <p class="subtitle">Anak Binaan LPKA Kelas I Kutoarjo</p>
-            <div id="status-bar">
-                <span class="dot"></span> <span class="status-text">Data Realtime Terkoneksi</span>
+            
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
+                    <input type="text" id="searchName" placeholder="Ketik nama lengkap (Wajib)" autocomplete="off">
+                    <button onclick="searchData()" id="btnSearch">Cari Data</button>
+                </div>
+                <div id="status-bar">
+                    <span class="dot"></span> <span class="status-text">Database Terkoneksi Real-Time</span>
+                </div>
             </div>
-            <div id="clock"><i class="fa-regular fa-clock"></i> <span></span></div>
         </header>
 
-        <main>
-            <div class="search-box">
-                <label for="searchName" class="input-label">Nama Lengkap Anak</label>
-                <div class="input-group">
-                    <span class="input-icon"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" id="searchName" placeholder="Masukkan Nama Lengkap..." autocomplete="off">
-                </div>
-                <div class="button-group">
-                    <button onclick="searchData()" id="btnSearch">
-                        <i class="fa-solid fa-magnifying-glass"></i> Cari Data
-                    </button>
-                    <button onclick="refreshPage()" id="btnRefresh">
-                        <i class="fa-solid fa-arrows-rotate"></i> Refresh
-                    </button>
-                </div>
-            </div>
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Mencari data ke server LPKA Kutoarjo...</p>
+        </div>
 
-            <div id="loading" class="hidden">
-                <div class="spinner"></div>
-                <p>Mencari data ke server...</p>
-            </div>
-
-            <div id="resultArea" class="hidden">
-                <div class="card card-info slide-up">
-                    <div class="card-header">
-                        <i class="fa-solid fa-user-check"></i>
-                        <h3>Identitas Anak Binaan</h3>
+        <main id="resultArea" class="hidden">
+            <div class="dashboard-grid">
+                
+                <div class="card card-identity slide-in-left">
+                    <div class="card-tag">Identitas Binaan</div>
+                    <div class="card-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+                    <div class="card-content">
+                        <h3>Nama Lengkap</h3>
+                        <p id="resNama" class="highlight-text">-</p>
+                        <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Status Terdaftar</div>
                     </div>
-                    <div class="card-body">
-                        <div class="info-row">
-                            <span class="info-label">Nama Lengkap</span>
-                            <span class="info-value font-bold" id="resNama">-</span>
+                </div>
+
+                <div class="card card-balance slide-in-right">
+                    <div class="card-tag">Informasi Keuangan</div>
+                    <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="card-content">
+                        <h3>Total Saldo Aktif</h3>
+                        <p id="resSaldo" class="balance-text">Rp 0</p>
+                        <span class="update-ts"><i class="fa-solid fa-clock"></i> Tersinkronisasi hari ini</span>
+                    </div>
+                </div>
+
+                <div class="card card-history slide-in-bottom">
+                    <div class="card-header-history">
+                        <div>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <h3 id="history-title">3 Transaksi Terakhir</h3>
+                        </div>
+                        <div class="history-search hidden" id="history-search-container">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchHistory" placeholder="Cari (Bulan, Jenis...)" onkeyup="filterHistory()">
                         </div>
                     </div>
-                </div>
+                    
+                    <div id="resHistory" class="history-list">
+                        </div>
 
-                <div class="card card-balance slide-up" style="animation-delay: 0.2s;">
-                    <div class="card-header">
-                        <i class="fa-regular fa-credit-card"></i>
-                        <h3>Saldo Brizzi Aktif</h3>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="balance-amount" id="resSaldo">Rp 0</div>
-                        <p class="balance-desc">Saldo terupdate sesuai database LPKA Kutoarjo</p>
+                    <div class="text-center mt-3 hidden" id="btn-more-container">
+                        <button class="btn-more-history" onclick="showAllHistory()">Cari Riwayat Terdahulu <i class="fa-solid fa-chevron-down"></i></button>
                     </div>
                 </div>
+                
+            </div>
+            
+            <div class="action-bottom slide-in-bottom">
+                <button onclick="refreshPage()" class="btn-refresh-bottom"><i class="fa-solid fa-arrows-rotate"></i> Cek Data Lainnya</button>
             </div>
         </main>
 
@@ -80,16 +95,15 @@
                     <i class="fa-solid fa-globe"></i> Kunjungi Web Resmi: <span>lpkakutoarjo.my.id</span>
                 </a>
             </div>
-            
             <div class="main-copyright">
                 <p>&copy; 2026 LPKA Kelas I Kutoarjo<br>Sistem Informasi Terpadu</p>
             </div>
-        
             <div class="magang-badge">
                 <i class="fa-solid fa-user-graduate"></i> Copyright 2026 Peserta MagangHUB Kemnaker Batch II
             </div>
         </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
