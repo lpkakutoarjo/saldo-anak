@@ -1,5 +1,5 @@
 // Anda dapat mengganti link ini jika melakukan "New Deployment" pada Google Apps Script
-const scriptUrl = "https://script.google.com/macros/s/AKfycbyTPMyqcLY4vMOaajbYeZix0D_Nwzr2G8L_92kNZC4RA9Zg5oxdyssmZpZiiAhqQg__/exec";
+const scriptUrl = "https://script.google.com/macros/s/AKfycbyN_X60H1J0-Eall57fZH70k9OYsnMYb8YuPuYr3_eAqnhX8bBQFIy-9C9AUqn0xr3D/exec";
 
 // Variabel Global untuk menyimpan semua data riwayat dari server
 let globalHistoryData = [];
